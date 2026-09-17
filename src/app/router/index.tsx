@@ -8,8 +8,13 @@ import Tasks from "../../features/tasks/Tasks";
 import Settings from "../../features/settings/Settings";
 import Applayout from "@/components/layout/Applayout";
 import ProtectedRoute from "./ProtectedRoute";
+import Home from "@/features/home/Home";
 
 export const router = createBrowserRouter([
+  {
+    path:"/",
+    element:<Home/>
+  },
   {
     path: "/login",
     element: <Login />,
