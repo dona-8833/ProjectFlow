@@ -10,10 +10,11 @@ interface AuthProviderProps {
 
 const AuthProvider = ({children}:AuthProviderProps) => {
     const [loading,setLoading] = useState(true)
-    const setAuth = useAuthStore((state) => state.setAuth)
+const setAuth = useAuthStore((state) => state.setAuth)
+const clearAuth = useAuthStore((state) => state.clearAuth)
+const supabase = createClient()
     useEffect(()=>{
         
-      const supabase = createClient()
        const GetInitialSession = async () => {
         try{
 
@@ -25,15 +26,19 @@ const AuthProvider = ({children}:AuthProviderProps) => {
        } 
        GetInitialSession()
        const {data:{subscription}} = supabase.auth.onAuthStateChange(
-        (_event,session) => {
+        (event,session) => {
+          if (event === "SIGNED_OUT"){
+            clearAuth()
+          }else{
             setAuth(session)
+          }
         }
        )
        return () => {
         subscription.unsubscribe()
        }
 
-    },[setAuth])
+    },[setAuth,clearAuth])
     if (loading) {
     return (
       <div className="flex h-screen items-center justify-center">

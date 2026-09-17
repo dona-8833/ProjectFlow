@@ -19,6 +19,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "./ui/Sidebar";
+import Logout from "@/features/auth/Logout";
 
 const navigationItems = [
   { label: "Dashboard", href: "/app/dashboard", icon: LayoutDashboard },
@@ -70,8 +71,9 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="border-t border-sidebar-border">
-        <div className="px-2 py-1 text-xs text-sidebar-foreground/60">
+        <div className="px-2 py-1 text-xs text-sidebar-foreground/60 flex items-center justify-between">
           Organize work. Move forward.
+        <Logout/>
         </div>
       </SidebarFooter>
       <SidebarRail />
