@@ -105,7 +105,6 @@ export default function Login() {
                 type="email"
                 placeholder="elena@projectflow.io"
                 autoComplete="email"
-                aria-invalid={!!errors.email}
                 className="h-11 rounded-md border-[#d4d4d1] bg-[#f5f5f4] px-3 text-[14px] text-[#171717] placeholder:text-[#7d7d7a] focus-visible:border-[#2d2d2d] focus-visible:ring-0"
                 {...register("email")}
               />
@@ -133,13 +132,11 @@ export default function Login() {
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••••••••••"
                   autoComplete="current-password"
-                  aria-invalid={!!errors.password}
                   className="h-11 rounded-md border-[#d4d4d1] bg-[#f5f5f4] px-3 pr-10 text-[14px] text-[#171717] placeholder:text-[#7d7d7a] focus-visible:border-[#2d2d2d] focus-visible:ring-0"
                   {...register("password")}
                 />
                 <button
                   type="button"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
                   onClick={() => setShowPassword((value) => !value)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5d5d59] hover:text-[#1c1c1c]"
                 >

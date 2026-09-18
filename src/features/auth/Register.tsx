@@ -47,6 +47,18 @@ export default function Register() {
   });
 
   const onSubmit = async (data: RegisterFormData) => {
+    const { data: isAvailable, error: rpcError } = await supabase.rpc(
+      "check_username_available",
+      { username_to_check: data.username },
+    );
+    if (rpcError || !isAvailable) {
+      setError("username", {
+        type: "manual",
+        message:
+          "This username is not available right now. Please choose another one.",
+      });
+      return;
+    }
     const { error } = await supabase.auth.signUp({
       email: data.email,
       password: data.password,
@@ -110,10 +122,6 @@ export default function Register() {
         </div>
 
         <div className="mt-4 rounded-[18px] border border-[#d8d8d5] bg-[#efefed] px-5 py-4 shadow-[0_2px_0_rgba(0,0,0,0.03)]">
-  
-
-
-
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
               <label
@@ -127,7 +135,6 @@ export default function Register() {
                 type="text"
                 placeholder="Elena Petrova"
                 autoComplete="name"
-                aria-invalid={!!errors.name}
                 className="h-11 rounded-md border-[#d4d4d1] bg-[#f5f5f4] px-3 text-[14px] text-[#171717] placeholder:text-[#7d7d7a] focus-visible:border-[#2d2d2d] focus-visible:ring-0"
                 {...register("name")}
               />
@@ -150,7 +157,6 @@ export default function Register() {
                 type="text"
                 placeholder="elenap"
                 autoComplete="username"
-                aria-invalid={!!errors.username}
                 className="h-11 rounded-md border-[#d4d4d1] bg-[#f5f5f4] px-3 text-[14px] text-[#171717] placeholder:text-[#7d7d7a] focus-visible:border-[#2d2d2d] focus-visible:ring-0"
                 {...register("username")}
               />
@@ -173,7 +179,6 @@ export default function Register() {
                 type="email"
                 placeholder="you@projectflow.io"
                 autoComplete="email"
-                aria-invalid={!!errors.email}
                 className="h-11 rounded-md border-[#d4d4d1] bg-[#f5f5f4] px-3 text-[14px] text-[#171717] placeholder:text-[#7d7d7a] focus-visible:border-[#2d2d2d] focus-visible:ring-0"
                 {...register("email")}
               />
@@ -197,7 +202,6 @@ export default function Register() {
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••••••••••"
                   autoComplete="new-password"
-                  aria-invalid={!!errors.password}
                   className="h-11 rounded-md border-[#d4d4d1] bg-[#f5f5f4] px-3 pr-10 text-[14px] text-[#171717] placeholder:text-[#7d7d7a] focus-visible:border-[#2d2d2d] focus-visible:ring-0"
                   {...register("password")}
                 />
@@ -234,7 +238,6 @@ export default function Register() {
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="••••••••••••••••"
                   autoComplete="new-password"
-                  aria-invalid={!!errors.confirmPassword}
                   className="h-11 rounded-md border-[#d4d4d1] bg-[#f5f5f4] px-3 pr-10 text-[14px] text-[#171717] placeholder:text-[#7d7d7a] focus-visible:border-[#2d2d2d] focus-visible:ring-0"
                   {...register("confirmPassword")}
                 />
@@ -292,8 +295,6 @@ export default function Register() {
           <span className="underline">Terms of Service</span> and{" "}
           <span className="underline">Privacy Policy</span>.
         </div>
-
-
       </div>
     </main>
   );
