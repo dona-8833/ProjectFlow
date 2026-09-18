@@ -12,7 +12,7 @@ export const useUpdateAvatar = () => {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn:uploadAvatar,
-        onSuccess:(data,variables) => {
+        onSuccess:(_data,variables) => {
             queryClient.invalidateQueries({queryKey:["profile",variables.userId]})
         }
     })
