@@ -8,7 +8,7 @@ const Applayout = () => {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-12  items-center justify-between gap-2 border-b px-4">
+        <header className="flex h-15   items-center justify-between gap-2 border-b px-4">
           <div className="flex items-center">
           <SidebarTrigger className="md:hidden" />
           <span className="text-sm font-medium">Project Flow</span>

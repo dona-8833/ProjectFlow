@@ -59,6 +59,7 @@ export function AppSidebar() {
                     <SidebarMenuButton
                       isActive={location.pathname === item.href}
                       render={<NavLink to={item.href} />}
+                      className="text-lg"
                     >
                       <Icon />
                       <span>{item.label}</span>
@@ -71,7 +72,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="border-t border-sidebar-border">
-        <div className="px-2 py-1 text-xs text-sidebar-foreground/60 flex items-center justify-between">
+        <div className="px-2 py-2 text-xs text-sidebar-foreground/60 flex items-center justify-between">
           Organize work. Move forward.
         <Logout/>
         </div>
