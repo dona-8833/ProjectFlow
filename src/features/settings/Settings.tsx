@@ -7,7 +7,7 @@ import { Upload, User } from "lucide-react";
 export default function Settings() {
   const user = useAuthStore((state) => state.user);
   const { data: profile, isLoading, isError } = useProfile(user?.id);
-const { mutate: uploadAvatar, isPending: isUploading } = useUpdateAvatar();
+  const { mutate: uploadAvatar, isPending: isUploading } = useUpdateAvatar();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const handleImageClick = () => {
     fileInputRef.current?.click();
@@ -15,7 +15,7 @@ const { mutate: uploadAvatar, isPending: isUploading } = useUpdateAvatar();
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file && user?.id) {
-      uploadAvatar({ userId: user.id, file,oldAvatarUrl:profile.avatar_url });
+      uploadAvatar({ userId: user.id, file, oldAvatarUrl: profile.avatar_url });
     }
   };
   if (isLoading) {

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Eye, EyeOff, ArrowRight } from "lucide-react";
+import { Eye, EyeOff, ArrowRight, BarChart3 } from "lucide-react";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/Button";
@@ -74,7 +74,7 @@ export default function Login() {
 
           <div className="flex items-center justify-center py-2">
             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#1d1d1d] text-lg text-white shadow-sm">
-              ☰
+              <BarChart3 className="size-4" />
             </div>
           </div>
 

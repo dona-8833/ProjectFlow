@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { getProfile, uploadAvatar } from "../services/profileService"
+import { data } from "react-router-dom"
 
 export const useProfile = (userId:string|undefined) => {
     return useQuery({
@@ -14,6 +15,7 @@ export const useUpdateAvatar = () => {
         mutationFn:uploadAvatar,
         onSuccess:(_data,variables) => {
             queryClient.invalidateQueries({queryKey:["profile",variables.userId]})
+            return data
         }
     })
 }
