@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { useAuthStore } from "@/app/store/authStore";
 import { Button } from "@/components/ui/Button";
+import { useTasks } from "@/features/tasks/hooks/useTasks";
 import {
   Dialog,
   DialogContent,
@@ -107,14 +108,14 @@ const ProjectSection = ({
   return (
     <section className="space-y-3">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
-        <span className="rounded-full bg-slate-100 px-2 py-1 text-xs font-medium text-slate-600">
+        <h2 className="text-lg font-semibold text-zinc-950">{title}</h2>
+        <span className="rounded-full bg-zinc-100 px-2 py-1 text-xs font-medium text-zinc-600">
           {projects.length}
         </span>
       </div>
 
       {projects.length === 0 ? (
-        <div className="rounded-md border border-dashed border-slate-200 bg-slate-50 p-4 text-sm text-slate-500">
+        <div className="rounded-md border border-dashed border-zinc-200 bg-zinc-50 p-4 text-sm text-zinc-500">
           {emptyMessage}
         </div>
       ) : (
@@ -141,6 +142,11 @@ const ProjectCard = ({
 }) => {
   const { data: collaborators = [], isLoading: collaboratorsLoading } =
     useCollab(project.id);
+  const {
+    data: tasks = [],
+    isLoading: tasksLoading,
+    isError: tasksError,
+  } = useTasks(project.id);
   const { mutateAsync: updateProject, isPending: isUpdating } =
     useUpdateProject();
   const { mutateAsync: deleteProject, isPending: isDeleting } =
@@ -158,6 +164,14 @@ const ProjectCard = ({
   const [editIsSearching, setEditIsSearching] = useState(false);
   const [editSelectedUserIds, setEditSelectedUserIds] = useState<string[]>([]);
   const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
+  const completedTasks = tasks.filter((task) => task.status === "done").length;
+  const canceledTasks = tasks.filter(
+    (task) => task.status === "canceled",
+  ).length;
+  const remainingTasks = tasks.length - completedTasks - canceledTasks;
+  const completionPercent = tasks.length
+    ? Math.round((completedTasks / tasks.length) * 100)
+    : 0;
 
   useEffect(() => {
     if (!isEditDialogOpen) {
@@ -262,7 +276,7 @@ const ProjectCard = ({
         <h3 className="text-lg font-semibold text-gray-900">{project.title}</h3>
 
         {readOnly && (
-          <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-amber-700">
+          <span className="rounded-full border border-zinc-300 bg-zinc-100 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-zinc-700">
             View only
           </span>
         )}
@@ -273,6 +287,46 @@ const ProjectCard = ({
           {project.description}
         </p>
       ) : null}
+
+      <section className="mt-4 space-y-2" aria-label="Task progress">
+        <div className="flex items-center justify-between gap-3 text-xs">
+          <span className="font-medium text-gray-700">
+            {readOnly ? "Your task progress" : "Task progress"}
+          </span>
+          {tasksLoading ? (
+            <span className="text-gray-500">Loading...</span>
+          ) : tasksError ? (
+            <span className="text-red-600">Unavailable</span>
+          ) : (
+            <span className="text-gray-600">
+              {completedTasks} complete · {remainingTasks} left
+              {canceledTasks > 0 ? ` · ${canceledTasks} canceled` : ""}
+            </span>
+          )}
+        </div>
+        <div
+          role="progressbar"
+          aria-label={
+            readOnly
+              ? "Your assigned task completion"
+              : "Project task completion"
+          }
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={completionPercent}
+          aria-valuetext={
+            tasksLoading || tasksError
+              ? "Task progress unavailable"
+              : `${completedTasks} complete, ${remainingTasks} left`
+          }
+          className="h-2 overflow-hidden rounded-full bg-zinc-100"
+        >
+          <div
+            className="h-full rounded-full bg-zinc-950 transition-[width] duration-300"
+            style={{ width: `${completionPercent}%` }}
+          />
+        </div>
+      </section>
 
       {!readOnly && (
         <div className="mt-4 flex items-center gap-2">
@@ -328,7 +382,7 @@ const ProjectCard = ({
             <div>
               <label
                 htmlFor={`project-title-${project.id}`}
-                className="mb-1 block text-sm font-medium text-slate-700"
+                className="mb-1 block text-sm font-medium text-zinc-700"
               >
                 Title
               </label>
@@ -337,14 +391,14 @@ const ProjectCard = ({
                 type="text"
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
-                className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-500"
+                className="w-full rounded-md border border-zinc-300 px-3 py-2 text-sm outline-none focus:border-zinc-700"
               />
             </div>
 
             <div>
               <label
                 htmlFor={`project-description-${project.id}`}
-                className="mb-1 block text-sm font-medium text-slate-700"
+                className="mb-1 block text-sm font-medium text-zinc-700"
               >
                 Description
               </label>
@@ -353,13 +407,13 @@ const ProjectCard = ({
                 rows={4}
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
-                className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-500"
+                className="w-full rounded-md border border-zinc-300 px-3 py-2 text-sm outline-none focus:border-zinc-700"
                 placeholder="Project description"
               />
             </div>
 
-            <div className="space-y-2 rounded-md border border-slate-200 bg-slate-50 p-3">
-              <label className="block text-xs font-medium uppercase tracking-wide text-slate-500">
+            <div className="space-y-2 rounded-md border border-zinc-200 bg-zinc-50 p-3">
+              <label className="block text-xs font-medium uppercase tracking-wide text-zinc-500">
                 Collaborators
               </label>
 
@@ -368,33 +422,33 @@ const ProjectCard = ({
                 value={editSearchTerm}
                 onChange={(event) => setEditSearchTerm(event.target.value)}
                 placeholder="Search users by username"
-                className="w-full rounded-md border border-slate-300 bg-white px-2.5 py-2 text-sm outline-none focus:border-slate-500"
+                className="w-full rounded-md border border-zinc-300 bg-white px-2.5 py-2 text-sm outline-none focus:border-zinc-700"
               />
 
               {editIsSearching && (
-                <p className="text-xs text-slate-500">Searching users...</p>
+                <p className="text-xs text-zinc-500">Searching users...</p>
               )}
 
               {editAvailableUsers.length > 0 && (
-                <div className="space-y-2 rounded-md border border-slate-200 bg-white p-2">
+                <div className="space-y-2 rounded-md border border-zinc-200 bg-white p-2">
                   {editAvailableUsers.map((person) => (
                     <button
                       key={person.id}
                       type="button"
                       onClick={() => handleAddCollaborator(person)}
-                      className="flex w-full items-center justify-between rounded-md border border-slate-200 px-2 py-2 text-left text-sm hover:bg-slate-100"
+                      className="flex w-full items-center justify-between rounded-md border border-zinc-200 px-2 py-2 text-left text-sm hover:bg-zinc-100"
                     >
                       <span>
-                        <span className="font-medium text-slate-800">
+                        <span className="font-medium text-zinc-900">
                           @{person.username}
                         </span>
                         {person.name && (
-                          <span className="ml-2 text-slate-500">
+                          <span className="ml-2 text-zinc-500">
                             {person.name}
                           </span>
                         )}
                       </span>
-                      <span className="text-xs text-slate-500">Add</span>
+                      <span className="text-xs text-zinc-500">Add</span>
                     </button>
                   ))}
                 </div>
@@ -496,7 +550,7 @@ const EditCollaboratorPill = ({
 
   if (isLoading) {
     return (
-      <span className="rounded-full bg-slate-200 px-2 py-1 text-xs text-slate-600">
+      <span className="rounded-full bg-zinc-200 px-2 py-1 text-xs text-zinc-700">
         Loading...
       </span>
     );
@@ -510,7 +564,7 @@ const EditCollaboratorPill = ({
     <button
       type="button"
       onClick={() => onRemove(userId)}
-      className="flex items-center gap-2 rounded-full border border-slate-300 bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-200"
+      className="flex items-center gap-2 rounded-full border border-zinc-300 bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-800 hover:bg-zinc-200"
     >
       <span>@{profile.username || "user"}</span>
       <span>×</span>
@@ -527,7 +581,7 @@ const Collaborator = ({ collaborator }: { collaborator: Collab }) => {
 
   if (isLoading) {
     return (
-      <div className="h-8 w-8 rounded-full border-2 border-white bg-slate-200" />
+      <div className="h-8 w-8 rounded-full border-2 border-white bg-zinc-200" />
     );
   }
 
@@ -557,7 +611,7 @@ const Collaborator = ({ collaborator }: { collaborator: Collab }) => {
         />
       ) : (
         <div
-          className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-slate-800 text-[10px] font-semibold text-white shadow-sm"
+          className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-zinc-900 text-[10px] font-semibold text-white shadow-sm"
           title={`${profile.name || profile.username} (${collaborator.role})`}
         >
           {initials}

@@ -14,6 +14,28 @@ export const getProfile = async (userId: string) => {
   }
   return data;
 };
+
+export type ProfileSummary = {
+  id: string;
+  name: string | null;
+  username: string | null;
+  avatar_url: string | null;
+};
+
+export const getProfileSummaries = async (
+  userIds: string[],
+): Promise<ProfileSummary[]> => {
+  if (userIds.length === 0) return [];
+
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("id, name, username, avatar_url")
+    .in("id", userIds);
+
+  if (error) throw new Error(error.message);
+  return (data ?? []) as ProfileSummary[];
+};
+
 export const uploadAvatar = async ({
   userId,
   file,
@@ -25,7 +47,7 @@ export const uploadAvatar = async ({
 }) => {
   const oldPath = oldAvatarUrl?.split("/avatars/")[1];
   if (oldPath) {
-    const {error: removeError } = await supabase.storage
+    const { error: removeError } = await supabase.storage
       .from("avatars")
       .remove([oldPath]);
     if (removeError) {

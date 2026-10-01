@@ -80,7 +80,7 @@ export default function Login() {
 
           <div className="mt-3 text-center">
             <h1 className="text-[28px] font-semibold tracking-[-0.04em] text-[#171717]">
-              ProjectFlow
+              ProjectTasker
             </h1>
             <h2 className="mt-3 text-[30px] font-semibold tracking-[-0.05em] text-[#1d1d1d]">
               Welcome back
@@ -103,7 +103,7 @@ export default function Login() {
               <Input
                 id="email"
                 type="email"
-                placeholder="elena@projectflow.io"
+                placeholder="elena@projecttasker.io"
                 autoComplete="email"
                 className="h-11 rounded-md border-[#d4d4d1] bg-[#f5f5f4] px-3 text-[14px] text-[#171717] placeholder:text-[#7d7d7a] focus-visible:border-[#2d2d2d] focus-visible:ring-0"
                 {...register("email")}

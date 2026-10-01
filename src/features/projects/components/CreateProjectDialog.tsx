@@ -29,9 +29,7 @@ type CreateProjectDialogProps = {
   onCreated?: () => void;
 };
 
-const CreateProjectDialog = ({
-  userId,
-}: CreateProjectDialogProps) => {
+const CreateProjectDialog = ({ userId }: CreateProjectDialogProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [availableUsers, setAvailableUsers] = useState<CollaboratorOption[]>(
@@ -135,12 +133,14 @@ const CreateProjectDialog = ({
       };
 
       await createProjectMutation(payload);
+
       resetForm();
       setIsOpen(false);
-    } catch (error: any) {
+    } catch (error: unknown) {
       setError("root", {
         type: "manual",
-        message: error?.message || "Failed to create project",
+        message:
+          error instanceof Error ? error.message : "Failed to create project",
       });
     }
   };
@@ -154,10 +154,7 @@ const CreateProjectDialog = ({
           size="sm"
           className="bg-slate-900 text-white hover:bg-slate-700 disabled:cursor-not-allowed disabled:bg-slate-300"
         >
-          {
-            userId
-              ? "New Project"
-              : "Sign in to create"}
+          {userId ? "New Project" : "Sign in to create"}
         </Button>
       </DialogTrigger>
 

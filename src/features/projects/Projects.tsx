@@ -17,10 +17,10 @@ export default function Projects() {
     <main className="space-y-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-zinc-500">
             Workspace
           </p>
-          <h1 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">
+          <h1 className="mt-1 text-3xl font-bold tracking-tight text-zinc-950">
             Projects
           </h1>
         </div>

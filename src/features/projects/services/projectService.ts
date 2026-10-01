@@ -16,7 +16,6 @@ export type CollaboratorOption = {
 };
 
 export type Collab = {
-  id?: string;
   project_id: string;
   user_id: string;
   role: string;
