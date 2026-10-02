@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
+import { Select } from "@/components/ui/Select";
 import {
   Dialog,
   DialogContent,
@@ -27,6 +28,7 @@ import {
   useDeleteTask,
   useTaskAssignees,
   useTasks,
+  useUpdateTask,
 } from "./hooks/useTasks";
 import { generateTasks } from "./services/Ai";
 import type {
@@ -58,6 +60,18 @@ const statusRank: Record<TaskStatus, number> = {
   canceled: 3,
 };
 
+const statusOptions = Object.entries(statusLabels).map(([value, label]) => ({
+  value,
+  label,
+}));
+
+const priorityOptions = [
+  { value: "all", label: "All priorities" },
+  { value: "high", label: "High priority" },
+  { value: "medium", label: "Medium priority" },
+  { value: "low", label: "Low priority" },
+];
+
 export default function Tasks() {
   const user = useAuthStore((state) => state.user);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -86,6 +100,7 @@ export default function Tasks() {
   const createTasksMutation = useCreateTasks();
   const deleteTaskMutation = useDeleteTask();
   const completeTaskMutation = useCompleteTask();
+  const updateTaskMutation = useUpdateTask();
 
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -203,6 +218,29 @@ export default function Tasks() {
     }
   };
 
+  const handleStatusChange = async (task: Task, status: TaskStatus) => {
+    if (!selectedProject || task.status === status) return;
+    try {
+      await updateTaskMutation.mutateAsync({
+        taskId: task.id,
+        projectId: selectedProject.id,
+        updates: { status },
+      });
+      setNotice({
+        kind: "success",
+        message: `Task marked ${statusLabels[status].toLowerCase()}.`,
+      });
+    } catch (error) {
+      setNotice({
+        kind: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Unable to update task status.",
+      });
+    }
+  };
+
   const handleGenerate = async () => {
     if (!selectedProject || !user?.id) return;
     setIsGenerating(true);
@@ -265,27 +303,18 @@ export default function Tasks() {
           </p>
         </div>
         {projects.length > 0 && (
-          <label className="w-full sm:max-w-xs">
-            <span className="sr-only">Select project</span>
-            <select
-              aria-label="Select project"
-              value={selectedProject?.id ?? ""}
-              onChange={(event) => selectProject(event.target.value)}
-              className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
-            >
-              <option value="" disabled>
-                Select project
-              </option>
-              {projects.map((project) => (
-                <option key={project.id} value={project.id}>
-                  {project.title}
-                  {project.owner_id === user.id
-                    ? " · Owner"
-                    : " · Collaborator"}
-                </option>
-              ))}
-            </select>
-          </label>
+          <Select
+            ariaLabel="Select project"
+            value={selectedProject?.id ?? ""}
+            onValueChange={selectProject}
+            placeholder="Select project"
+            className="w-full sm:max-w-xs"
+            triggerClassName="w-full"
+            options={projects.map((project) => ({
+              value: project.id,
+              label: `${project.title}${project.owner_id === user.id ? " · Owner" : " · Collaborator"}`,
+            }))}
+          />
         )}
       </header>
 
@@ -346,21 +375,19 @@ export default function Tasks() {
                 />
               </label>
               <div className="flex flex-wrap gap-2">
-                <label className="sr-only" htmlFor="task-sort">
-                  Sort tasks
-                </label>
-                <select
-                  id="task-sort"
+                <Select
+                  ariaLabel="Sort tasks"
                   value={sort}
-                  onChange={(event) => setSort(event.target.value as SortKey)}
-                  className="h-9 rounded-md border border-input bg-background px-2.5 text-xs"
-                >
-                  <option value="newest">Newest</option>
-                  <option value="oldest">Oldest</option>
-                  {isOwner && <option value="title">Title</option>}
-                  <option value="priority">Priority</option>
-                  <option value="status">Status</option>
-                </select>
+                  onValueChange={(value) => setSort(value as SortKey)}
+                  triggerClassName="h-9 w-full text-xs sm:w-auto"
+                  options={[
+                    { value: "newest", label: "Newest" },
+                    { value: "oldest", label: "Oldest" },
+                    ...(isOwner ? [{ value: "title", label: "Title" }] : []),
+                    { value: "priority", label: "Priority" },
+                    { value: "status", label: "Status" },
+                  ]}
+                />
                 {isOwner && (
                   <>
                     <Button
@@ -395,56 +422,63 @@ export default function Tasks() {
                 <SlidersHorizontal className="size-3.5" />
                 Filters
               </span>
-              <select
-                aria-label="Filter by status"
+              <Select
+                ariaLabel="Filter by status"
                 value={statusFilter}
-                onChange={(event) => setStatusFilter(event.target.value)}
-                className="h-8 rounded-md border border-input bg-background px-2 text-xs"
-              >
-                <option value="all">All statuses</option>
-                {Object.entries(statusLabels).map(([value, label]) => (
-                  <option key={value} value={value}>
-                    {label}
-                  </option>
-                ))}
-              </select>
-              <select
-                aria-label="Filter by priority"
+                onValueChange={setStatusFilter}
+                triggerClassName="h-8 w-full text-xs sm:w-auto"
+                options={[
+                  { value: "all", label: "All statuses" },
+                  ...statusOptions,
+                ]}
+                renderValue={(option) =>
+                  !option || option.value === "all" ? "Status" : option.label
+                }
+              />
+              <Select
+                ariaLabel="Filter by priority"
                 value={priorityFilter}
-                onChange={(event) => setPriorityFilter(event.target.value)}
-                className="h-8 rounded-md border border-input bg-background px-2 text-xs"
-              >
-                <option value="all">All priorities</option>
-                <option value="high">High</option>
-                <option value="medium">Medium</option>
-                <option value="low">Low</option>
-              </select>
+                onValueChange={setPriorityFilter}
+                triggerClassName="h-8 w-full text-xs sm:w-auto"
+                options={priorityOptions}
+                renderValue={(option) =>
+                  option?.value === "all" ? "Priority" : option?.label
+                }
+              />
               {isOwner && (
                 <>
-                  <select
-                    aria-label="Filter by assignee"
+                  <Select
+                    ariaLabel="Filter by assignee"
                     value={assigneeFilter}
-                    onChange={(event) => setAssigneeFilter(event.target.value)}
-                    className="h-8 max-w-47.5 rounded-md border border-input bg-background px-2 text-xs"
-                  >
-                    <option value="all">All assignees</option>
-                    <option value="unassigned">Unassigned</option>
-                    {assignees.map((person) => (
-                      <option key={person.id} value={person.id}>
-                        {person.name || person.username} (@{person.username})
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    aria-label="Filter by source"
+                    onValueChange={setAssigneeFilter}
+                    className="w-full sm:max-w-56"
+                    triggerClassName="h-8 w-full text-xs"
+                    options={[
+                      { value: "all", label: "All assignees" },
+                      { value: "unassigned", label: "Unassigned" },
+                      ...assignees.map((person) => ({
+                        value: person.id,
+                        label: `${person.name || person.username} (@${person.username})`,
+                      })),
+                    ]}
+                    renderValue={(option) =>
+                      option?.value === "all" ? "Assignee" : option?.label
+                    }
+                  />
+                  <Select
+                    ariaLabel="Filter by source"
                     value={sourceFilter}
-                    onChange={(event) => setSourceFilter(event.target.value)}
-                    className="h-8 rounded-md border border-input bg-background px-2 text-xs"
-                  >
-                    <option value="all">All sources</option>
-                    <option value="manual">Manual</option>
-                    <option value="ai">AI generated</option>
-                  </select>
+                    onValueChange={setSourceFilter}
+                    triggerClassName="h-8 w-full text-xs sm:w-auto"
+                    options={[
+                      { value: "all", label: "All sources" },
+                      { value: "manual", label: "Manual" },
+                      { value: "ai", label: "AI generated" },
+                    ]}
+                    renderValue={(option) =>
+                      option?.value === "all" ? "Source" : option?.label
+                    }
+                  />
                 </>
               )}
               <span className="ml-auto inline-flex items-center gap-1 text-[11px] text-muted-foreground">
@@ -516,6 +550,14 @@ export default function Tasks() {
               onEdit={openEditForm}
               onDelete={setDeleteCandidate}
               onComplete={(task) => void handleComplete(task)}
+              onStatusChange={(task, status) =>
+                void handleStatusChange(task, status)
+              }
+              updatingStatusTaskId={
+                updateTaskMutation.isPending
+                  ? updateTaskMutation.variables?.taskId
+                  : undefined
+              }
             />
           )}
         </>

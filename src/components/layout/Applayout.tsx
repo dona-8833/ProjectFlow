@@ -8,14 +8,14 @@ const Applayout = () => {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-15   items-center justify-between gap-2 border-b px-4">
+        <header className="flex h-15 fixed w-full bg-white  items-center justify-between gap-2 border-b px-4">
           <div className="flex items-center">
           <SidebarTrigger className="md:hidden" />
           <span className="text-sm font-medium">Project Flow</span>
           </div>
           <ProfilePicture/>
         </header>
-        <main className="flex flex-1 flex-col gap-4 md:p-4 p-2">
+        <main className="flex flex-1 flex-col gap-4 md:p-4 p-2 mt-13">
           <Outlet />
         </main>
       </SidebarInset>

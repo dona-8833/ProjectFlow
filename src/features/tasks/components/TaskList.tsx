@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Check, Clock3, Eye, Pencil, Trash2, UserRound } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
+import { Select } from "@/components/ui/Select";
 import {
   Dialog,
   DialogContent,
@@ -12,7 +13,7 @@ import {
 } from "@/components/ui/Dialog";
 import { useProfile } from "@/features/settings/hooks/userProfile";
 import { AssigneeAvatar } from "./TaskFormDialog";
-import type { Task, TaskAssignee } from "../types/task.types";
+import type { Task, TaskAssignee, TaskStatus } from "../types/task.types";
 
 type TaskListProps = {
   tasks: Task[];
@@ -23,6 +24,8 @@ type TaskListProps = {
   onEdit: (task: Task) => void;
   onDelete: (task: Task) => void;
   onComplete: (task: Task) => void;
+  onStatusChange: (task: Task, status: TaskStatus) => void;
+  updatingStatusTaskId?: string;
 };
 
 const statusLabels = {
@@ -60,6 +63,8 @@ export function TaskList({
   onEdit,
   onDelete,
   onComplete,
+  onStatusChange,
+  updatingStatusTaskId,
 }: TaskListProps) {
   const [detailTask, setDetailTask] = useState<Task | null>(null);
 
@@ -91,11 +96,15 @@ export function TaskList({
                     </p>
                   )}
                   <div className="mt-3 flex flex-wrap items-center gap-2 text-[10px]">
-                    <span
-                      className={`rounded border px-2 py-1 ${statusStyles[task.status]}`}
-                    >
-                      {statusLabels[task.status]}
-                    </span>
+                    {isOwner ? (
+                      <TaskStatusDropdown
+                        task={task}
+                        disabled={updatingStatusTaskId === task.id}
+                        onChange={(status) => onStatusChange(task, status)}
+                      />
+                    ) : (
+                      <StatusBadge status={task.status} />
+                    )}
                     <span
                       className={`rounded border px-2 py-1 ${priorityStyles[task.priority]}`}
                     >
@@ -196,6 +205,8 @@ export function TaskList({
           setDetailTask(null);
           onComplete(task);
         }}
+        onStatusChange={onStatusChange}
+        updatingStatusTaskId={updatingStatusTaskId}
       />
     </>
   );
@@ -212,6 +223,8 @@ function TaskDetailsDialog({
   onEdit,
   onDelete,
   onComplete,
+  onStatusChange,
+  updatingStatusTaskId,
 }: {
   task: Task | null;
   open: boolean;
@@ -223,6 +236,8 @@ function TaskDetailsDialog({
   onEdit: (task: Task) => void;
   onDelete: (task: Task) => void;
   onComplete: (task: Task) => void;
+  onStatusChange: (task: Task, status: TaskStatus) => void;
+  updatingStatusTaskId?: string;
 }) {
   const { data: creator } = useProfile(isOwner ? task?.created_by : undefined);
 
@@ -245,7 +260,17 @@ function TaskDetailsDialog({
             <dl className="grid gap-x-5 gap-y-4 sm:grid-cols-2">
               <Detail
                 label="Status"
-                value={<StatusBadge status={task.status} />}
+                value={
+                  isOwner ? (
+                    <TaskStatusDropdown
+                      task={task}
+                      disabled={updatingStatusTaskId === task.id}
+                      onChange={(status) => onStatusChange(task, status)}
+                    />
+                  ) : (
+                    <StatusBadge status={task.status} />
+                  )
+                }
               />
               <Detail label="Priority" value={task.priority} />
               <Detail label="Created at" value={formatDate(task.created_at)} />
@@ -344,5 +369,29 @@ function StatusBadge({ status }: { status: Task["status"] }) {
     >
       {statusLabels[status]}
     </span>
+  );
+}
+
+function TaskStatusDropdown({
+  task,
+  disabled,
+  onChange,
+}: {
+  task: Task;
+  disabled: boolean;
+  onChange: (status: TaskStatus) => void;
+}) {
+  return (
+    <Select
+      ariaLabel={`Change status for ${task.title}`}
+      value={task.status}
+      onValueChange={(value) => onChange(value as TaskStatus)}
+      disabled={disabled}
+      triggerClassName={`h-7 w-full min-w-28 px-2 text-[10px] ${statusStyles[task.status]}`}
+      options={Object.entries(statusLabels).map(([value, label]) => ({
+        value,
+        label,
+      }))}
+    />
   );
 }

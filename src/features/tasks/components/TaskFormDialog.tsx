@@ -13,6 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/Dialog";
 import { Input } from "@/components/ui/Input";
+import { Select } from "@/components/ui/Select";
 import { taskFormSchema, type TaskFormData } from "../schemas/task.schema";
 import { useCreateTask, useUpdateTask } from "../hooks/useTasks";
 import type { Task, TaskAssignee, TaskInsert } from "../types/task.types";
@@ -164,15 +165,24 @@ export function TaskFormDialog({
               >
                 Priority
               </label>
-              <select
-                id="task-priority"
-                className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
-                {...form.register("priority")}
-              >
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-              </select>
+              <Controller
+                control={form.control}
+                name="priority"
+                render={({ field }) => (
+                  <Select
+                    ariaLabel="Task priority"
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    className="w-full"
+                    triggerClassName="w-full"
+                    options={[
+                      { value: "low", label: "Low" },
+                      { value: "medium", label: "Medium" },
+                      { value: "high", label: "High" },
+                    ]}
+                  />
+                )}
+              />
             </div>
             <div>
               <label
@@ -181,16 +191,25 @@ export function TaskFormDialog({
               >
                 Status
               </label>
-              <select
-                id="task-status"
-                className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
-                {...form.register("status")}
-              >
-                <option value="todo">To do</option>
-                <option value="in_progress">In progress</option>
-                <option value="done">Done</option>
-                <option value="canceled">Canceled</option>
-              </select>
+              <Controller
+                control={form.control}
+                name="status"
+                render={({ field }) => (
+                  <Select
+                    ariaLabel="Task status"
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    className="w-full"
+                    triggerClassName="w-full"
+                    options={[
+                      { value: "todo", label: "To do" },
+                      { value: "in_progress", label: "In progress" },
+                      { value: "done", label: "Done" },
+                      { value: "canceled", label: "Canceled" },
+                    ]}
+                  />
+                )}
+              />
             </div>
           </div>
 
