@@ -251,7 +251,7 @@ export default function Dashboard() {
     "there";
 
   return (
-    <main className="mx-auto w-full max-w-360 space-y-6 rounded-md bg-[#f7f7f7] p-3 sm:p-5 lg:p-6">
+    <main className="mx-auto w-full max-w-360 space-y-6 rounded-md   sm:p-5 lg:p-6">
       <section className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-[#858585]">

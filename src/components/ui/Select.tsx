@@ -52,7 +52,7 @@ export function Select({
               );
               return renderValue
                 ? renderValue(selectedOption)
-                : selectedOption?.label ?? placeholder;
+                : (selectedOption?.label ?? placeholder);
             }}
           </SelectPrimitive.Value>
           <SelectPrimitive.Icon className="shrink-0 text-muted-foreground">
@@ -72,12 +72,12 @@ export function Select({
                     value={option.value}
                     className="relative flex min-h-9 cursor-default select-none items-center rounded-sm py-1.5 pl-2.5 pr-8 text-sm outline-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50"
                   >
-                      {option.indicatorClassName && (
-                        <span
-                          aria-hidden="true"
-                          className={`mr-2 size-2 shrink-0 rounded-full ${option.indicatorClassName}`}
-                        />
-                      )}
+                    {option.indicatorClassName && (
+                      <span
+                        aria-hidden="true"
+                        className={`mr-2 size-2 shrink-0 rounded-full ${option.indicatorClassName}`}
+                      />
+                    )}
                     <SelectPrimitive.ItemText>
                       {option.label}
                     </SelectPrimitive.ItemText>
