@@ -11,7 +11,7 @@ const Applayout = () => {
         <header className="flex h-15 fixed w-full bg-white  items-center justify-between gap-2 border-b px-4">
           <div className="flex items-center">
           <SidebarTrigger className="md:hidden" />
-          <span className="text-sm font-medium">Project Flow</span>
+          <span className="text-sm font-medium">Project Tasker</span>
           </div>
           <ProfilePicture/>
         </header>

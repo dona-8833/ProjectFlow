@@ -39,7 +39,7 @@ export function AppSidebar() {
             <BarChart3 className="size-4" />
           </div>
           <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold">Project Flow</span>
+            <span className="truncate font-semibold">Project Tasker</span>
             <span className="truncate text-xs text-sidebar-foreground/60">
               Workspace
             </span>

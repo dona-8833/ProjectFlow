@@ -27,6 +27,7 @@ import {
   type ProjectGroups,
   type ProjectRecord,
 } from "../services/projectService";
+import { Link } from "react-router-dom";
 
 type ProjectListProps = {
   projects?: ProjectGroups;
@@ -263,12 +264,13 @@ const ProjectCard = ({
   };
 
   return (
-    <div
-      aria-disabled={readOnly}
+    <Link
+      to={`/app/tasks?project=${project.id}`}
+      // aria-disabled={readOnly}
       className={[
         "flex flex-col rounded-lg border border-gray-200 bg-white p-5 shadow-sm transition-shadow",
         readOnly
-          ? "cursor-not-allowed select-none opacity-80 pointer-events-none"
+          ? " select-none opacity-80 "
           : "hover:shadow-md",
       ].join(" ")}
     >
@@ -535,7 +537,7 @@ const ProjectCard = ({
           <p className="text-xs text-gray-500">No collaborators yet</p>
         )}
       </div>
-    </div>
+    </Link>
   );
 };
 
