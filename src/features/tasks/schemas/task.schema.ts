@@ -10,7 +10,7 @@ export const taskPrioritySchema = z.enum(["low", "medium", "high"]);
 
 export const taskFormSchema = z.object({
   title: z.string().trim().min(1, "Enter a task title").max(160),
-  description: z.string().trim().max(5000),
+  description: z.string().trim().min(1,"Enter the task description").max(5000),
   priority: taskPrioritySchema,
   status: taskStatusSchema,
   assigned_to: z.string().uuid().nullable(),
