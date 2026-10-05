@@ -110,7 +110,7 @@ function HeroPreview() {
   return (
     <div className="overflow-hidden rounded-[8px] border border-[#e7e2e6] bg-white shadow-[0_14px_35px_-22px_rgba(25,19,24,0.4)]">
       <div className="flex h-9 items-center justify-between border-b border-[#eee9ed] bg-[#f6f3f5] px-3 sm:px-4">
-        <div className="flex min-w-0 items-center gap-2 text-[10px] text-[#777078] sm:gap-3 sm:text-[11px]">
+        <div className="flex min-w-0 items-center gap-2 text-[11px] text-[#5f5960] sm:gap-3 sm:text-xs">
           <span className="flex shrink-0 gap-1.5" aria-hidden="true">
             <i className="size-1.5 rounded-full bg-[#c9c2c8]" />
             <i className="size-1.5 rounded-full bg-[#c9c2c8]" />
@@ -120,7 +120,7 @@ function HeroPreview() {
             CloudScale Architecture / API &amp; Microservices
           </span>
         </div>
-        <span className="ml-2 flex shrink-0 items-center gap-1.5 rounded-full border border-[#e4dfe3] bg-white px-2 py-1 text-[8px] text-[#59545a] sm:text-[9px]">
+        <span className="ml-2 flex shrink-0 items-center gap-1.5 rounded-full border border-[#e4dfe3] bg-white px-2 py-1 text-[10px] text-[#49444a] sm:text-[11px]">
           <i className="size-1.5 rounded-full bg-[#78977d]" />
           AI Synthesized
         </span>
@@ -128,11 +128,11 @@ function HeroPreview() {
 
       <div className="grid gap-4 p-3 sm:grid-cols-2 sm:gap-5 sm:p-5">
         <section aria-label="Generated architecture">
-          <div className="mb-2 flex items-center justify-between gap-2 text-[10px] font-semibold text-[#29252a] sm:text-[11px]">
+          <div className="mb-2 flex items-center justify-between gap-2 text-[11px] font-semibold text-[#29252a] sm:text-xs">
             <span className="flex items-center gap-1.5">
               <Layers3 className="size-3" /> Core Architecture
             </span>
-            <span className="text-[9px] font-normal text-[#918a91]">
+            <span className="text-[10px] font-normal text-[#625c63]">
               5 Nodes Verified
             </span>
           </div>
@@ -163,19 +163,19 @@ function HeroPreview() {
                 className="flex min-w-0 items-center justify-between gap-2 rounded-[4px] border border-[#eee9ed] px-2 py-1.5"
               >
                 <div className="flex min-w-0 items-start gap-2">
-                  <span className="pt-0.5 font-mono text-[8px] text-[#a29ba2]">
+                  <span className="pt-0.5 font-mono text-[10px] text-[#6c666d]">
                     {row[0]}
                   </span>
                   <div className="min-w-0">
-                    <p className="truncate text-[9px] font-medium text-[#373238]">
+                    <p className="truncate text-[11px] font-medium text-[#373238]">
                       {row[1]}
                     </p>
-                    <p className="truncate text-[8px] text-[#918a91]">
+                    <p className="truncate text-[10px] text-[#625c63]">
                       {row[2]}
                     </p>
                   </div>
                 </div>
-                <span className="shrink-0 font-mono text-[8px] text-[#777078]">
+                <span className="shrink-0 font-mono text-[10px] text-[#5f5960]">
                   {row[3]}
                 </span>
               </div>
@@ -184,11 +184,11 @@ function HeroPreview() {
         </section>
 
         <section aria-label="Generated sprint tasks">
-          <div className="mb-2 flex items-center justify-between gap-2 text-[10px] font-semibold text-[#29252a] sm:text-[11px]">
+          <div className="mb-2 flex items-center justify-between gap-2 text-[11px] font-semibold text-[#29252a] sm:text-xs">
             <span className="flex items-center gap-1.5">
               <ListTodo className="size-3" /> Generated Sprint
             </span>
-            <span className="text-[9px] font-normal text-[#918a91]">
+            <span className="text-[10px] font-normal text-[#625c63]">
               6 Tasks Queued
             </span>
           </div>
@@ -204,12 +204,12 @@ function HeroPreview() {
                 key={label}
                 className="flex min-w-0 items-center justify-between gap-2 rounded-[4px] border border-[#eee9ed] px-2 py-[7px]"
               >
-                <span className="flex min-w-0 items-center gap-1.5 truncate text-[9px] text-[#454047]">
+                <span className="flex min-w-0 items-center gap-1.5 truncate text-[11px] text-[#454047]">
                   <CircleCheck className="size-3 shrink-0 text-[#9a929a]" />
                   {label}
                 </span>
                 <span
-                  className={`shrink-0 rounded-[3px] px-1.5 py-0.5 text-[8px] ${status === "In Progress" ? "bg-[#171717] text-white" : "bg-[#f2eff1] text-[#777078]"}`}
+                  className={`shrink-0 rounded-[3px] px-1.5 py-0.5 text-[10px] ${status === "In Progress" ? "bg-[#171717] text-white" : "bg-[#f2eff1] text-[#5f5960]"}`}
                 >
                   {status}
                 </span>
@@ -228,14 +228,14 @@ function PlanningPreview() {
       <div className="rounded-[5px] border border-[#eee9ed] bg-white p-3 sm:p-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <p className="font-mono text-[8px] uppercase tracking-[0.12em] text-[#8d858d]">
+            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#625c63]">
               Input prompt
             </p>
-            <p className="mt-1 flex items-center gap-2 text-[10px] text-[#3c373d] sm:text-[11px]">
+            <p className="mt-1 flex items-center gap-2 text-[11px] text-[#3c373d] sm:text-xs">
               <Command className="size-3" /> “Build an e-commerce platform”
             </p>
           </div>
-          <span className="font-mono text-[8px] text-[#918a91]">
+          <span className="font-mono text-[10px] text-[#625c63]">
             Analyzed in 1.6s · Model: Architecture Engine v2
           </span>
         </div>
@@ -244,10 +244,10 @@ function PlanningPreview() {
       <div className="mt-4 grid gap-5 md:grid-cols-[1fr_1.15fr]">
         <section>
           <div className="mb-2 flex items-center justify-between">
-            <h3 className="text-[11px] font-semibold text-[#262227]">
+            <h3 className="text-xs font-semibold text-[#262227]">
               Generated Architecture
             </h3>
-            <span className="font-mono text-[8px] text-[#918a91]">
+            <span className="font-mono text-[10px] text-[#625c63]">
               5 Components
             </span>
           </div>
@@ -258,19 +258,19 @@ function PlanningPreview() {
                 className="flex items-center justify-between gap-2 rounded-[4px] border border-[#eee9ed] bg-white px-2.5 py-2"
               >
                 <div className="flex min-w-0 items-start gap-2">
-                  <span className="font-mono text-[8px] text-[#938b93]">
+                  <span className="font-mono text-[10px] text-[#625c63]">
                     {number}
                   </span>
                   <div className="min-w-0">
-                    <p className="truncate text-[9px] font-medium text-[#343036]">
+                    <p className="truncate text-[11px] font-medium text-[#343036]">
                       {title}
                     </p>
-                    <p className="truncate font-mono text-[8px] text-[#918a91]">
+                    <p className="truncate font-mono text-[10px] text-[#625c63]">
                       {description}
                     </p>
                   </div>
                 </div>
-                <span className="shrink-0 font-mono text-[8px] text-[#6b646b]">
+                <span className="shrink-0 font-mono text-[10px] text-[#514b52]">
                   {tag}
                 </span>
               </div>
@@ -280,10 +280,10 @@ function PlanningPreview() {
 
         <section>
           <div className="mb-2 flex items-center justify-between">
-            <h3 className="text-[11px] font-semibold text-[#262227]">
+            <h3 className="text-xs font-semibold text-[#262227]">
               Actionable Tasks
             </h3>
-            <span className="font-mono text-[8px] text-[#918a91]">6 Items</span>
+            <span className="font-mono text-[10px] text-[#625c63]">6 Items</span>
           </div>
           <div className="space-y-1.5">
             {tasks.map(([label, status]) => (
@@ -291,7 +291,7 @@ function PlanningPreview() {
                 key={label}
                 className="flex min-w-0 items-center justify-between gap-2 rounded-[4px] border border-[#eee9ed] bg-white px-2.5 py-2"
               >
-                <span className="flex min-w-0 items-center gap-1.5 truncate text-[9px] text-[#39343a]">
+                <span className="flex min-w-0 items-center gap-1.5 truncate text-[11px] text-[#39343a]">
                   {status === "Done" ? (
                     <Check className="size-3 shrink-0 text-[#6e8b72]" />
                   ) : (
@@ -300,7 +300,7 @@ function PlanningPreview() {
                   {label}
                 </span>
                 <span
-                  className={`shrink-0 rounded-[3px] px-1.5 py-0.5 font-mono text-[8px] ${status === "In Progress" ? "bg-[#171717] text-white" : "bg-[#f2eff1] text-[#716a71]"}`}
+                  className={`shrink-0 rounded-[3px] px-1.5 py-0.5 font-mono text-[10px] ${status === "In Progress" ? "bg-[#171717] text-white" : "bg-[#f2eff1] text-[#514b52]"}`}
                 >
                   {status}
                 </span>
@@ -327,7 +327,7 @@ const Home = () => {
           >
             <BrandMark /> Project Tasker
           </Link>
-          <div className="hidden items-center gap-7 text-[11px] text-[#625c63] md:flex">
+          <div className="hidden items-center gap-7 text-xs text-[#514b52] md:flex">
             <a className="transition hover:text-black" href="#features">
               Features
             </a>
@@ -343,13 +343,13 @@ const Home = () => {
           </div>
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
-              className="px-2 py-2 text-[11px] text-[#4f4a50] transition hover:text-black"
+              className="px-2 py-2 text-xs text-[#3f3a40] transition hover:text-black"
               to="/login"
             >
               Log in
             </Link>
             <Link
-              className="rounded-[4px] bg-[#171717] px-3 py-2 text-[10px] font-medium text-white transition hover:bg-[#393539]"
+              className="rounded-[4px] bg-[#171717] px-3 py-2 text-xs font-medium text-white transition hover:bg-[#393539]"
               to="/register"
             >
               Get started
@@ -367,26 +367,26 @@ const Home = () => {
 
       <section className="px-5 pb-16 pt-14 sm:px-8 sm:pb-20 sm:pt-[72px]">
         <div className="mx-auto max-w-[920px] text-center">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#eee9ed] bg-[#f7f4f6] px-3 py-1 text-[9px] text-[#625c63]">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#eee9ed] bg-[#f7f4f6] px-3 py-1 text-[11px] text-[#514b52]">
             <Sparkles className="size-3" /> Project Tasker 2.0 · Software Planning
             Engine
           </span>
           <h1 className="mx-auto mt-5 max-w-[720px] text-[38px] font-semibold leading-[1.06] tracking-[-0.045em] sm:text-[54px]">
             Plan smarter. Build faster.
           </h1>
-          <p className="mx-auto mt-3 max-w-[470px] text-[13px] leading-6 text-[#777078]">
+          <p className="mx-auto mt-3 max-w-[470px] text-[15px] leading-7 text-[#5f5960]">
             Turn your project ideas into structured architectures and actionable
             tasks with the help of AI.
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <Link
-              className="inline-flex h-10 items-center gap-2 rounded-[4px] bg-[#171717] px-4 text-[11px] font-medium text-white transition hover:bg-[#393539]"
+              className="inline-flex h-10 items-center gap-2 rounded-[4px] bg-[#171717] px-4 text-xs font-medium text-white transition hover:bg-[#393539]"
               to="/register"
             >
               Start planning <ArrowRight className="size-3.5" />
             </Link>
             <a
-              className="inline-flex h-10 items-center gap-1 rounded-[4px] px-3 text-[11px] text-[#4f4a50] transition hover:bg-[#f7f4f6]"
+              className="inline-flex h-10 items-center gap-1 rounded-[4px] px-3 text-xs text-[#3f3a40] transition hover:bg-[#f7f4f6]"
               href="#how-it-works"
             >
               See how it works <ChevronRight className="size-3.5" />
@@ -403,13 +403,13 @@ const Home = () => {
         className="scroll-mt-16 bg-[#f6f2f5] px-5 py-14 sm:px-8 sm:py-20"
       >
         <div className="mx-auto max-w-[920px]">
-          <p className="font-mono text-[9px] uppercase tracking-[0.13em] text-[#827982]">
+          <p className="font-mono text-[11px] uppercase tracking-[0.13em] text-[#625c63]">
             Process
           </p>
           <h2 className="mt-1 text-[27px] font-medium leading-tight tracking-[-0.035em] sm:text-[34px]">
             From idea to execution.
           </h2>
-          <p className="mt-2 max-w-[530px] text-[12px] leading-5 text-[#777078]">
+          <p className="mt-2 max-w-[530px] text-sm leading-6 text-[#5f5960]">
             Developers often have great project ideas but struggle to break them
             into clean system architecture and actionable tasks. 
             bridges the gap in seconds.
@@ -423,14 +423,14 @@ const Home = () => {
                 <span className="flex size-8 items-center justify-center rounded-[4px] bg-[#f1edf0] text-[#383239]">
                   <Icon className="size-4" />
                 </span>
-                <p className="mt-4 font-mono text-[8px] text-[#918a91]">
+                <p className="mt-4 font-mono text-[10px] text-[#625c63]">
                   {number}
                 </p>
                 <h3 className="mt-1 text-[13px] font-medium">{title}</h3>
-                <p className="mt-1.5 text-[10px] leading-[1.65] text-[#777078]">
+                <p className="mt-1.5 text-xs leading-[1.65] text-[#5f5960]">
                   {copy}
                 </p>
-                <p className="mt-4 font-mono text-[8px] text-[#514b52]">
+                <p className="mt-4 font-mono text-[10px] text-[#3f3a40]">
                   {detail}
                 </p>
               </article>
@@ -444,13 +444,13 @@ const Home = () => {
         className="scroll-mt-16 px-5 py-14 sm:px-8 sm:py-20"
       >
         <div className="mx-auto max-w-[920px]">
-          <p className="font-mono text-[9px] uppercase tracking-[0.13em] text-[#827982]">
+          <p className="font-mono text-[11px] uppercase tracking-[0.13em] text-[#625c63]">
             Live capabilities
           </p>
           <h2 className="mt-1 text-[27px] font-medium leading-tight tracking-[-0.035em] sm:text-[34px]">
             Turn project descriptions into actionable plans.
           </h2>
-          <p className="mt-2 max-w-[540px] text-[12px] leading-5 text-[#777078]">
+          <p className="mt-2 max-w-[540px] text-sm leading-6 text-[#5f5960]">
             Give Project Tasker a project description. The AI analyzes the
             requirements and generates a structured architecture and actionable
             tasks.
@@ -466,13 +466,13 @@ const Home = () => {
         className="scroll-mt-16 bg-[#f6f2f5] px-5 py-14 sm:px-8 sm:py-20"
       >
         <div className="mx-auto max-w-[920px]">
-          <p className="font-mono text-[9px] uppercase tracking-[0.13em] text-[#827982]">
+          <p className="font-mono text-[11px] uppercase tracking-[0.13em] text-[#625c63]">
             Capabilities
           </p>
           <h2 className="mt-1 text-[27px] font-medium leading-tight tracking-[-0.035em] sm:text-[34px]">
             Everything you need to manage a project.
           </h2>
-          <p className="mt-2 max-w-[520px] text-[12px] leading-5 text-[#777078]">
+          <p className="mt-2 max-w-[520px] text-sm leading-6 text-[#5f5960]">
             A toolbox built for software engineers who value speed, spatial
             precision, and zero friction.
           </p>
@@ -485,8 +485,8 @@ const Home = () => {
                 <span className="flex size-7 items-center justify-center rounded-[4px] bg-[#f1edf0] text-[#383239]">
                   <Icon className="size-3.5" />
                 </span>
-                <h3 className="mt-3 text-[11px] font-medium">{title}</h3>
-                <p className="mt-1.5 text-[10px] leading-[1.6] text-[#777078]">
+                <h3 className="mt-3 text-xs font-medium">{title}</h3>
+                <p className="mt-1.5 text-xs leading-[1.6] text-[#5f5960]">
                   {copy}
                 </p>
               </article>
@@ -497,13 +497,13 @@ const Home = () => {
 
       <section className="px-5 py-14 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-[920px]">
-          <p className="font-mono text-[9px] uppercase tracking-[0.13em] text-[#827982]">
+          <p className="font-mono text-[11px] uppercase tracking-[0.13em] text-[#625c63]">
             Workflow
           </p>
           <h2 className="mt-1 text-[27px] font-medium leading-tight tracking-[-0.035em] sm:text-[34px]">
             How It Works
           </h2>
-          <p className="mt-2 text-[12px] leading-5 text-[#777078]">
+          <p className="mt-2 text-sm leading-6 text-[#5f5960]">
             A predictable three-phase flow that takes you from ambiguity to
             clarity.
           </p>
@@ -529,8 +529,8 @@ const Home = () => {
                 <p className="text-[42px] font-medium leading-none tracking-[-0.05em] sm:text-[50px]">
                   {number}
                 </p>
-                <h3 className="mt-3 text-[12px] font-medium">{title}</h3>
-                <p className="mt-1.5 max-w-[260px] text-[10px] leading-[1.65] text-[#777078]">
+                <h3 className="mt-3 text-[13px] font-medium">{title}</h3>
+                <p className="mt-1.5 max-w-[260px] text-xs leading-[1.65] text-[#5f5960]">
                   {copy}
                 </p>
               </article>
@@ -544,17 +544,17 @@ const Home = () => {
         className="scroll-mt-16 px-5 pb-14 sm:px-8 sm:pb-20"
       >
         <div className="mx-auto flex max-w-[920px] flex-col items-center rounded-[8px] bg-[#171717] px-6 py-11 text-center text-white shadow-[0_14px_30px_-20px_rgba(20,16,18,0.5)] sm:py-14">
-          <p className="font-mono text-[8px] uppercase tracking-[0.16em] text-[#b5adb5]">
+          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#d0c9d0]">
             Start building today
           </p>
           <h2 className="mt-2 max-w-[480px] text-[28px] font-medium leading-[1.1] tracking-[-0.035em] sm:text-[36px]">
             Your next project starts with an idea.
           </h2>
-          <p className="mt-2 max-w-[390px] text-[11px] leading-5 text-[#c4bdc4]">
+          <p className="mt-2 max-w-[390px] text-xs leading-5 text-[#ded8de]">
             Turn that idea into a structured plan with Project Tasker.
           </p>
           <Link
-            className="mt-5 inline-flex h-10 items-center gap-2 rounded-[4px] bg-white px-4 text-[10px] font-medium text-[#171717] transition hover:bg-[#eee9ed]"
+            className="mt-5 inline-flex h-10 items-center gap-2 rounded-[4px] bg-white px-4 text-xs font-medium text-[#171717] transition hover:bg-[#eee9ed]"
             to="/register"
           >
             Get started <ArrowRight className="size-3.5" />
@@ -568,11 +568,11 @@ const Home = () => {
             <Link to="/" className="text-[12px] font-semibold">
               Project Tasker
             </Link>
-            <p className="mt-1 text-[9px] text-[#827982]">
+            <p className="mt-1 text-[11px] text-[#625c63]">
               AI-powered project planning and task management.
             </p>
           </div>
-          <div className="flex flex-wrap gap-x-5 gap-y-2 text-[9px] text-[#625c63]">
+          <div className="flex flex-wrap gap-x-5 gap-y-2 text-[11px] text-[#514b52]">
             <a className="hover:text-black" href="#features">
               Features
             </a>
@@ -590,7 +590,7 @@ const Home = () => {
             </Link>
           </div>
         </div>
-        <div className="mx-auto flex max-w-[1180px] items-center justify-between border-t border-[#f0edf0] py-3 text-[8px] text-[#827982]">
+        <div className="mx-auto flex max-w-[1180px] items-center justify-between border-t border-[#f0edf0] py-3 text-[10px] text-[#625c63]">
           <span>© 2026 Project Tasker. All rights reserved.</span>
           <span className="flex items-center gap-1.5">
             System operational{" "}

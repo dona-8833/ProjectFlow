@@ -88,14 +88,14 @@ function ProjectProgress({
         </span>
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
-            <h3 className="line-clamp-1 text-[13px] font-semibold text-[#242424] group-hover:text-black">
+            <h3 className="line-clamp-1 text-sm font-semibold text-[#242424] group-hover:text-black">
               {project.title}
             </h3>
-            <span className="shrink-0 rounded-full bg-[#f1f1f1] px-2 py-0.5 text-[9px] text-[#555555]">
+            <span className="shrink-0 rounded-full bg-[#f1f1f1] px-2 py-0.5 text-[10px] text-[#444444]">
               {shared ? "Shared" : "Owner"}
             </span>
           </div>
-          <p className="mt-1 line-clamp-1 text-[10px] text-[#858585]">
+          <p className="mt-1 line-clamp-1 text-xs text-[#626262]">
             {project.description || "Project workspace"}
           </p>
         </div>
@@ -106,8 +106,8 @@ function ProjectProgress({
           <Skeleton className="h-4 w-full" />
         ) : (
           <>
-            <div className="mb-1.5 flex items-center justify-between gap-2 text-[10px]">
-              <span className="text-[#5d5d5d]">
+            <div className="mb-1.5 flex items-center justify-between gap-2 text-[11px]">
+              <span className="text-[#4f4f4f]">
                 {completed}/{total} tasks done
               </span>
               <span className="font-semibold text-[#303030]">
@@ -142,7 +142,7 @@ function Assignee({
   profiles: ReturnType<typeof useProfileSummaries>["data"];
 }) {
   if (!userId)
-    return <span className="text-[10px] text-[#9a929c]">Unassigned</span>;
+    return <span className="text-[11px] text-[#625c63]">Unassigned</span>;
   const profile = profiles?.find((person) => person.id === userId);
   const label = profile?.name || profile?.username || "Assigned";
   return (
@@ -158,7 +158,7 @@ function Assignee({
           {label.slice(0, 1).toUpperCase()}
         </span>
       )}
-      <span className="hidden max-w-20 truncate text-[10px] text-[#6f6871] sm:block">
+      <span className="hidden max-w-20 truncate text-[11px] text-[#514b52] sm:block">
         {label}
       </span>
     </span>
@@ -254,13 +254,13 @@ export default function Dashboard() {
     <main className="mx-auto w-full max-w-360 space-y-6 rounded-md   sm:p-5 lg:p-6">
       <section className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-[#858585]">
+          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#626262]">
             Workspace / Overview
           </p>
           <h1 className="mt-2 text-[26px] font-semibold leading-tight tracking-[-0.035em] text-[#211e23] sm:text-[30px]">
             Good morning, {firstName}
           </h1>
-          <p className="mt-1 text-xs text-[#777777]">
+          <p className="mt-1 text-sm text-[#5f5f5f]">
             Here&apos;s what&apos;s happening across your projects and tasks.
           </p>
         </div>
@@ -271,21 +271,21 @@ export default function Dashboard() {
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Search tasks..."
-              className="h-9 w-full rounded-md border border-[#e5e5e5] bg-white pl-8 pr-3 text-[11px] outline-none placeholder:text-[#8a8a8a] focus:border-[#555555]"
+              className="h-9 w-full rounded-md border border-[#e5e5e5] bg-white pl-8 pr-3 text-xs outline-none placeholder:text-[#666666] focus:border-[#555555]"
             />
           </label>
           <Button
             variant="outline"
             size="sm"
             render={<Link to="/app/tasks" />}
-            className="h-9 border-[#e5e5e5] bg-white text-[11px]"
+            className="h-9 border-[#e5e5e5] bg-white text-xs"
           >
             <SlidersHorizontal /> Filter view
           </Button>
           <Button
             size="sm"
             render={<Link to="/app/tasks" />}
-            className="h-9 bg-black text-[11px] text-white hover:bg-[#333333]"
+            className="h-9 bg-black text-xs text-white hover:bg-[#333333]"
           >
             <Plus /> New task
           </Button>
@@ -346,13 +346,13 @@ export default function Dashboard() {
                 <h2 className="text-sm font-semibold text-[#292929]">
                   Recent projects
                 </h2>
-                <span className="rounded bg-[#ededed] px-1.5 py-0.5 text-[9px] text-[#666666]">
+                <span className="rounded bg-[#ededed] px-1.5 py-0.5 text-[10px] text-[#4f4f4f]">
                   {projects.length}
                 </span>
               </div>
               <Link
                 to="/app/projects"
-                className="inline-flex items-center gap-1 text-[10px] font-medium text-[#5f5f5f] hover:text-black"
+                className="inline-flex items-center gap-1 text-xs font-medium text-[#4f4f4f] hover:text-black"
               >
                 View all <ArrowRight className="size-3" />
               </Link>
@@ -416,7 +416,7 @@ export default function Dashboard() {
                       type="button"
                       aria-pressed={taskFilter === filter}
                       onClick={() => setTaskFilter(filter)}
-                      className={`rounded px-2 py-1 text-[9px] transition ${taskFilter === filter ? "bg-white font-medium text-[#222222] shadow-sm" : "text-[#777777] hover:text-[#222222]"}`}
+                      className={`rounded px-2 py-1 text-[10px] transition ${taskFilter === filter ? "bg-white font-medium text-[#222222] shadow-sm" : "text-[#5f5f5f] hover:text-[#222222]"}`}
                     >
                       {filter === "all" ? "All" : statusLabels[filter]}
                     </button>
@@ -430,12 +430,12 @@ export default function Dashboard() {
                     value={search}
                     onChange={(event) => setSearch(event.target.value)}
                     placeholder="Search"
-                    className="h-7 w-28 rounded border border-[#e5e5e5] pl-7 pr-2 text-[10px] outline-none focus:border-[#555555]"
+                    className="h-8 w-28 rounded border border-[#e5e5e5] pl-7 pr-2 text-[11px] outline-none focus:border-[#555555]"
                   />
                 </label>
                 <Link
                   to="/app/tasks"
-                  className="inline-flex shrink-0 items-center gap-1 text-[10px] text-[#626262] hover:text-black"
+                  className="inline-flex shrink-0 items-center gap-1 text-xs text-[#4f4f4f] hover:text-black"
                 >
                   View all tasks <ArrowRight className="size-3" />
                 </Link>
@@ -459,7 +459,7 @@ export default function Dashboard() {
             ) : matchingTasks.length ? (
               <div className="overflow-x-auto">
                 <table className="w-full min-w-170 border-collapse text-left">
-                  <thead className="bg-[#fafafa] text-[9px] font-medium uppercase tracking-[0.08em] text-[#777777]">
+                  <thead className="bg-[#fafafa] text-[11px] font-medium uppercase tracking-[0.08em] text-[#555555]">
                     <tr>
                       <th className="px-4 py-2.5">Task</th>
                       <th className="px-3 py-2.5">Project</th>
@@ -469,7 +469,7 @@ export default function Dashboard() {
                       <th className="px-4 py-2.5 text-right">Assignee</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#eeeeee] text-[10px]">
+                  <tbody className="divide-y divide-[#eeeeee] text-xs">
                     {matchingTasks.map((task) => (
                       <RecentTaskRow
                         key={task.id}
@@ -482,7 +482,7 @@ export default function Dashboard() {
                     ))}
                   </tbody>
                 </table>
-                <div className="flex items-center justify-between border-t border-[#ededed] px-4 py-2.5 text-[9px] text-[#777777]">
+                <div className="flex items-center justify-between border-t border-[#ededed] px-4 py-2.5 text-[11px] text-[#555555]">
                   <span>
                     Showing {matchingTasks.length} of {totalTasks} accessible
                     tasks
@@ -532,7 +532,7 @@ function MetricCard({
   return (
     <article className="min-h-28 rounded-md border border-[#e5e5e5] bg-white p-4 shadow-[0_2px_8px_rgba(0,0,0,0.025)]">
       <div className="flex items-center justify-between gap-2">
-        <h2 className="text-[10px] font-medium text-[#696969]">{title}</h2>
+        <h2 className="text-xs font-medium text-[#505050]">{title}</h2>
         <span
           className={`flex size-7 items-center justify-center rounded-lg ${iconColor}`}
         >
@@ -543,7 +543,7 @@ function MetricCard({
         <p className="text-[27px] font-semibold leading-none tracking-[-0.04em] text-[#211e23]">
           {value === null ? <Skeleton className="h-7 w-12" /> : value}
         </p>
-        <p className="max-w-[68%] pb-0.5 text-right text-[9px] leading-4 text-[#777777]">
+        <p className="max-w-[68%] pb-0.5 text-right text-[11px] leading-4 text-[#555555]">
           {detail}
         </p>
       </div>
@@ -580,16 +580,16 @@ function RecentTaskRow({
         >
           {task.title}
         </Link>
-        <span className="mt-0.5 block truncate text-[9px] text-[#858585]">
+        <span className="mt-0.5 block truncate text-[11px] text-[#626262]">
           {task.source === "ai" ? "AI generated" : "Manual"}
         </span>
       </td>
-      <td className="max-w-37.5 truncate px-3 py-3 text-[#6e6e6e]">
+      <td className="max-w-37.5 truncate px-3 py-3 text-[#505050]">
         {projectTitle}
       </td>
       <td className="px-3 py-3">
         <span
-          className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-[9px] ${statusStyles[task.status]}`}
+          className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-[10px] ${statusStyles[task.status]}`}
         >
           <span className="size-1 rounded-full bg-current" />
           {statusLabels[task.status]}
@@ -597,12 +597,12 @@ function RecentTaskRow({
       </td>
       <td className="px-3 py-3">
         <span
-          className={`rounded px-2 py-1 text-[9px] ${priorityStyles[task.priority]}`}
+          className={`rounded px-2 py-1 text-[10px] ${priorityStyles[task.priority]}`}
         >
           {task.priority}
         </span>
       </td>
-      <td className="whitespace-nowrap px-3 py-3 font-mono text-[9px] text-[#6e6e6e]">
+      <td className="whitespace-nowrap px-3 py-3 font-mono text-[11px] text-[#505050]">
         {formatDate(task.created_at)}
       </td>
       <td className="px-4 py-3 text-right">
